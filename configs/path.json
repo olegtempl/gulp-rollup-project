@@ -1,12 +1,13 @@
 {
    "src": {
+      "fileJs": "index.js",
       "pug": "src/pug/**/*.pug",
       "js": "src/js/",
       "scss": "src/styles/**/*.scss"
    },
    "build": {
       "html": "build/",
-      "js": "build/js/",
+      "js": "build/",
       "css": "build/styles/"
    },
    "tests": {
@@ -29,7 +30,7 @@
       "babel": "./configs/babel.json"
    },
    "docs": {
-      "jsDoc": "docs/jsDoc/README.md"
+      "jsDoc": "build/docs/jsDoc/README.md"
    }
 }
 
