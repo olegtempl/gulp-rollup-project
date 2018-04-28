@@ -7,9 +7,9 @@
     "doc": "gulp doc",
     "test:j": "gulp test:jasmine",
     "test": "gulp test:mocha",
-    "js": "gulp"
+    "js:gulp": "gulp",
+    "js": "rollup -c configs/rollup.config.js -w -m " 
   },
-
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.26.0",
