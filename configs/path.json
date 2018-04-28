@@ -11,8 +11,8 @@
       "css": "build/styles/"
    },
    "tests": {
-      "mocha": "tests/mocha/spec.js",
-      "jasmine": "tests/jasmine/spec.js"
+      "mocha": "build/tests/mocha/spec.js",
+      "jasmine": "build/tests/jasmine/spec.js"
    },
    "validation": {
       "html": "build/*.html",
