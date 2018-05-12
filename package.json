@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "lint": "gulp lint:js",
-    "doc": "gulp doc",
+    "valid:js": "gulp validation:js",
+    "doc:all": "gulp documentation",
+    "doc:js": "gulp documentation:jsDoc",
+    "doc:l": "gulp documentation:license",
+    "doc:b": "gulp documentation:bundleReadme",
     "test:j": "gulp test:jasmine",
-    "test": "gulp test:mocha",
+    "test:m": "gulp test:mocha",
+    "test:u": "gulp test:unit",
     "js:gulp": "gulp",
-    "js": "rollup -c configs/rollup.config.js -w -m " 
+    "js": "rollup -c configs/rollup.config.js -w -m "
   },
   "license": "MIT",
   "devDependencies": {
