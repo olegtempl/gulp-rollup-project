@@ -51,7 +51,7 @@ gulp.task('watch', function () {
     gulp.watch(path.watch.js, ['js']);
 });
 
-gulp.task('lintJs', () => {
+gulp.task('validation:js', () => {
   return gulp.src([path.validation.js,'!node_modules/**'])
     .pipe(eslint({
       fix: true       // редактирует ошибки если может
@@ -87,11 +87,20 @@ gulp.task('test:jasmine', () =>
 );
 
  
-gulp.task('doc', function (cb) {
+gulp.task('documentation:jsDoc', function (cb) {
     gulp.src([path.docs.jsDoc, `${path.build.js}index.js`], {read: false})
     .pipe(jsdoc(jsDocconfig, cb));
 });
 
-gulp.task('default', ['lintJs', 'js' , 'watch'] );
+gulp.task('default', ['validation:js', 'js' , 'watch'] );
 
 
+
+// test:unit - юнит тесты
+// test:e2e - 2e2 тесты
+
+// "gulp documentation" - запуск генерации всех типов документации
+// documentation:bundleReadme - сборка реадме по сусекам ?? Или на прямую использовать апи моего модуля
+
+// documentation:license - генерация лицензии ?? Или на прямую использовать апи моего модуля
+//     // "test": "gulp test",
