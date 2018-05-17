@@ -3,12 +3,14 @@
       "fileJs": "index.js",
       "pug": "src/pug/**/*.pug",
       "js": "src/js/",
-      "scss": "src/styles/**/*.scss"
+      "scss": "src/styles/**/*.scss",
+      "data": "src/js/data"
    },
    "build": {
       "html": "build/",
       "js": "build/",
-      "css": "build/styles/"
+      "css": "build/styles/",
+      "data": "build/data"
    },
    "tests": {
       "mocha": "build/tests/mocha/spec.js",

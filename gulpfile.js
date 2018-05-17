@@ -1,5 +1,6 @@
 const gulp = require('gulp'),
     watch = require('gulp-watch'),
+    dirSync = require('gulp-directory-sync'),
     rollup = require('rollup-stream'),
     source = require('vinyl-source-stream'),
     buffer = require('vinyl-buffer'),
@@ -27,8 +28,15 @@ const gulp = require('gulp'),
   };
 };
 // plugins for tests
-const mocha = require('gulp-mocha'),
-      jasmine = require('gulp-jasmine');
+const mocha = require('gulp-mocha');
+// jasmine test
+const Jasmine = require('jasmine'),
+      jasmine = new Jasmine(),
+      jasmineConfig = require('./configs/jasmine/jasmine.json');
+// jasmine reporter
+const JasmineConsoleReporter = require('jasmine-console-reporter'),
+      jasmineReporterConfig = require('./configs/jasmine/jasmineReporter.json'),
+      reporter = new JasmineConsoleReporter(jasmineReporterConfig);
 // plugins for validations
 const eslint = require('gulp-eslint');
 // plugins for documentation
@@ -45,10 +53,10 @@ gulp.task('js', rollupJS('index.js', {
   distPath: path.build.js,
   sourcemap: true
 }));
- 
- 
+
+
 gulp.task('watch', function () {
-    gulp.watch(path.watch.js, ['js']);
+    gulp.watch(path.watch.js, ['js', 'validation:js']);
 });
 
 gulp.task('validation:js', () => {
@@ -65,9 +73,18 @@ gulp.task('validation:js', () => {
     }))
 });
 
+/*
+	В случае если данные не входят в js код, но необходимы для работы синхронизируеться директория data
+	в директорию с публикуемым кодом.
+
+*/
+gulp.task('dataSync', function () {
+	return gulp.src('')
+		.pipe(dirSync(path.src.data, path.build.data, {printSummary: true}))
+});
 
 /*
-    В моем проекте стоит стандарт airbnb,под свои проект можно сконфигурировать файл заново 
+    В моем проекте стоит стандарт airbnb,под свои проект можно сконфигурировать файл заново
     командой:
     ./node_modules/.bin/eslint --init
 
@@ -81,12 +98,16 @@ gulp.task('test:mocha', () =>
         .pipe(mocha())
 );
 
-gulp.task('test:jasmine', () =>
-    gulp.src(path.tests.jasmine)
-        .pipe(jasmine())
-);
+gulp.task('test:jasmine', () => {
+  jasmine.loadConfig(jasmineConfig);
+  jasmine.jasmine.DEFAULT_TIMEOUT_INTERVAL = 15000;
+  jasmine.env.clearReporters();
+  jasmine.addReporter(reporter);
+  jasmine.execute();
+});
 
- 
+
+
 gulp.task('documentation:jsDoc', function (cb) {
     gulp.src([path.docs.jsDoc, `${path.build.js}index.js`], {read: false})
     .pipe(jsdoc(jsDocconfig, cb));
