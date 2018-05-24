@@ -1,0 +1,1 @@
+Before running tests for cli add rights the performing file - ex: chmod 755 index.js.
