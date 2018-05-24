@@ -3,9 +3,9 @@ import babel from 'rollup-plugin-babel';
 const path = require('./path.json');
 
 export default {
-  input: path.src.js + path.src.fileJs,
+  input: path.src.js + path.src.startFileJs,
   output: {
-    file: path.build.js + path.src.fileJs,
+    file: path.build.js + path.src.endFileJs,
     format: 'cjs'
   },
   plugins: [

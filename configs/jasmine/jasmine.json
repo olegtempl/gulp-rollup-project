@@ -1,7 +1,8 @@
 {
   "spec_dir": "test/jasmine/",
   "spec_files": [
-      "**/*[sS]pec.js"
+      "**/*[sS]pec.js",
+      "**/*[sS]pecCli.js"
   ],
   "helpers": [
       "helpers/**/*.js"
