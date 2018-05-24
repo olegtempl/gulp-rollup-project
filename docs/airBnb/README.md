@@ -4,12 +4,6 @@
 
 > **Замечание**: это руководство подразумевает использование [Babel](https://babeljs.io) вместе с [babel-preset-airbnb](https://npmjs.com/babel-preset-airbnb) или аналогом. Оно также предполагает установленный shims/polyfills в вашем приложении, такой как [airbnb-browser-shims](https://npmjs.com/airbnb-browser-shims) или аналог.
 
-[![Скачать](https://img.shields.io/npm/dm/eslint-config-airbnb.svg)](https://www.npmjs.com/package/eslint-config-airbnb)
-[![Скачать](https://img.shields.io/npm/dm/eslint-config-airbnb-base.svg)](https://www.npmjs.com/package/eslint-config-airbnb-base)
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/airbnb/javascript?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-
-Это руководство также доступно на других языках. Смотрите [Переводы](#translation).
-
 Другие руководства
 
  - [React](react/)
@@ -42,19 +36,7 @@
   1. [Соглашение об именовании](#naming-conventions)
   1. [Аксессоры](#accessors)
   1. [События](#events)
-  1. [jQuery](#jquery)
-  1. [Поддержка ECMAScript 5](#ecmascript-5-compatibility)
-  1. [Возможности ECMAScript 6+ (ES 2015+)](#ecmascript-6-es-2015-styles)
-  1. [Стандартная библиотека](#standard-library)
-  1. [Тестирование](#testing)
-  1. [Производительность](#performance)
-  1. [Ресурсы](#resources)
-  1. [В реальной жизни](#in-the-wild)
-  1. [Переводы](#translation)
-  1. [Пообщаться с разработчиками Airbnb](#chat-with-us-about-javascript)
-  1. [Участники перевода](#contributors)
-  1. [Лицензия](#license)
-  1. [Поправки](#amendments)
+  
 
 ## <a name="types">Типы</a>
 
@@ -2269,9 +2251,7 @@
      *соответствующий переданному названию тега
      */
     function make(tag) {
-
       // ...
-
       return element;
     }
 
@@ -2281,9 +2261,7 @@
      * соответствующий переданному названию тега
      */
     function make(tag) {
-
       // ...
-
       return element;
     }
     ```
@@ -2886,10 +2864,10 @@
     ```javascript
     // хорошо
     /**
-     * этот код медленно работал из-за parseInt.
-     * побитовый сдвиг строки для приведения ее к числу
-     * работает значительно быстрее.
-     */
+    * этот код медленно работал из-за parseInt.
+    * побитовый сдвиг строки для приведения ее к числу
+    * работает значительно быстрее.
+    */
     const val = inputValue >> 0;
     ```
 
@@ -2990,10 +2968,10 @@
     // хорошо
     this.firstName = 'Panda';
 
-   // хорошо, в средах, где поддерживается WeakMaps
-   // смотрите https://kangax.github.io/compat-table/es6/#test-WeakMap
-   const firstNames = new WeakMap();
-   firstNames.set(this, 'Panda');
+    // хорошо, в средах, где поддерживается WeakMaps
+    // смотрите https://kangax.github.io/compat-table/es6/#test-WeakMap
+     const firstNames = new WeakMap();
+     firstNames.set(this, 'Panda');
     ```
 
   <a name="naming--self-this"></a><a name="23.5"></a>
@@ -3062,11 +3040,11 @@
 
   <a name="naming--camelCase-default-export"></a><a name="23.7"></a>
   - [23.7](#naming--camelCase-default-export) Используйте `camelCase`, когда экспортируете функцию по умолчанию. Ваш файл должен называться так же, как и имя функции.
+
     ```javascript
     function makeStyleGuide() {
       // ...
     }
-
     export default makeStyleGuide;
     ```
 
@@ -3220,101 +3198,6 @@
 
 **[⬆ к оглавлению](#Оглавление)**
 
-## <a name="jquery">jQuery</a>
-
-  <a name="jquery--dollar-prefix"></a><a name="26.1"></a>
-  - [26.1](#jquery--dollar-prefix) Начинайте названия переменных, хранящих объект jQuery, со знака `$`. jscs: [`requireDollarBeforejQueryAssignment`](http://jscs.info/rule/requireDollarBeforejQueryAssignment)
-
-    ```javascript
-    // плохо
-    const sidebar = $('.sidebar');
-
-    // хорошо
-    const $sidebar = $('.sidebar');
-
-    // хорошо
-    const $sidebarBtn = $('.sidebar-btn');
-    ```
-
-  <a name="jquery--cache"></a><a name="26.2"></a>
-  - [26.2](#jquery--cache) Кэшируйте jQuery-поиски.
-
-    ```javascript
-    // плохо
-    function setSidebar() {
-      $('.sidebar').hide();
-
-      // ...
-
-      $('.sidebar').css({
-        'background-color': 'pink',
-      });
-    }
-
-    // хорошо
-    function setSidebar() {
-      const $sidebar = $('.sidebar');
-      $sidebar.hide();
-
-      // ...
-
-      $sidebar.css({
-        'background-color': 'pink',
-      });
-    }
-    ```
-
-  <a name="jquery--queries"></a><a name="26.3"></a>
-  - [26.3](#jquery--queries) Для поиска в DOM используйте каскады `$('.sidebar ul')` или селектор родитель > ребенок `$('.sidebar > ul')`. [jsPerf](http://jsperf.com/jquery-find-vs-context-sel/16)
-
-  <a name="jquery--find"></a><a name="26.4"></a>
-  - [26.4](#jquery--find) Используйте функцию `find` для поиска в сохраненных jQuery-объектах.
-
-    ```javascript
-    // плохо
-    $('ul', '.sidebar').hide();
-
-    // плохо
-    $('.sidebar').find('ul').hide();
-
-    // хорошо
-    $('.sidebar ul').hide();
-
-    // хорошо
-    $('.sidebar > ul').hide();
-
-    // хорошо
-    $sidebar.find('ul').hide();
-    ```
-
-**[⬆ к оглавлению](#Оглавление)**
-
-## <a name="ecmascript-5-compatibility">Поддержка ECMAScript 5</a>
-
-  <a name="es5-compat--kangax"></a><a name="27.1"></a>
-  - [27.1](#es5-compat--kangax) Можно посмотреть в [таблице поддержки](https://kangax.github.io/es5-compat-table/) ES5 от пользователя [Kangax](https://twitter.com/kangax/) .
-
-**[⬆ к оглавлению](#Оглавление)**
-
-## <a name="ecmascript-6-es-2015-styles">Возможности ECMAScript 6+ (ES 2015+)</a>
-
-  <a name="es6-styles"></a><a name="28.1"></a>
-  - [28.1](#es6-styles) Здесь собраны ссылки на различные возможности ES6.
-
-  1. [Стрелочные функции](#arrow-functions)
-  1. [Классы и конструкторы](#classes--constructors)
-  1. [Сокращенная запись методов объекта](#es6-object-shorthand)
-  1. [Сокращенная запись свойств объекта](#es6-object-concise)
-  1. [Вычисляемые имена свойств объекта](#es6-computed-properties)
-  1. [Шаблонные строки](#es6-template-literals)
-  1. [Деструктуризация](#destructuring)
-  1. [Параметры по умолчанию](#es6-default-parameters)
-  1. [Оставшиеся параметры](#es6-rest)
-  1. [Оператор расширения](#es6-array-spreads)
-  1. [Let и Const](#references)
-  1. [Итераторы и генераторы](#iterators-and-generators)
-  1. [Модули](#modules)
-
   <a name="tc39-proposals"></a>
   - [28.2](#tc39-proposals) Не используйте [предложения TC39](https://github.com/tc39/proposals), которые не перешли на 3-ю стадию.
 
@@ -3362,249 +3245,6 @@
 
 **[⬆ к оглавлению](#Оглавление)**
 
-## <a name="testing">Тестирование</a>
-
-  <a name="testing--yup"></a><a name="30.1"></a>
-  - [30.1](#testing--yup) **Ага.**
-
-    ```javascript
-    function foo() {
-      return true;
-    }
-    ```
-
-  <a name="testing--for-real"></a><a name="30.2"></a>
-  - [30.2](#testing--for-real) **Нет, но серьезно**:
-    - Какой бы фреймворк вы не использовали, вы должны писать тесты!
-    - Стремитесь к тому, чтобы написать много маленьких чистых функций, и к тому, чтобы свести к минимуму места, где происходят мутации.
-    - Будьте осторожны со стабами (stubs) и моками (mocks) — они могут сделать ваше тестирование хрупким.
-    - Мы в первую очередь советуем вам использовать [`mocha`](https://www.npmjs.com/package/mocha) и [`jest`](https://www.npmjs.com/package/jest) от Airbnb. [`tape`](https://www.npmjs.com/package/tape) также иногда используется для небольших, отдельных модулей.
-    - 100% покрытие тестами — это хорошая цель, к которой надо стремиться, даже если это не всегда практично.
-    - Всякий раз, когда вы исправляете ошибку, _пишите регрессионный тест_. Исправленная ошибка без регрессионного тестирования почти наверняка всплывет в будущем.
-
-**[⬆ к оглавлению](#Оглавление)**
-
-## <a name="performance">Производительность</a>
-
-  - [On Layout & Web Performance](https://www.kellegous.com/j/2013/01/26/layout-performance/)
-  - [String vs Array Concat](https://jsperf.com/string-vs-array-concat/2)
-  - [Try/Catch Cost In a Loop](https://jsperf.com/try-catch-in-loop-cost)
-  - [Bang Function](https://jsperf.com/bang-function)
-  - [jQuery Find vs Context, Selector](https://jsperf.com/jquery-find-vs-context-sel/13)
-  - [innerHTML vs textContent for script text](https://jsperf.com/innerhtml-vs-textcontent-for-script-text)
-  - [Long String Concatenation](https://jsperf.com/ya-string-concat)
-  - [Are Javascript functions like `map()`, `reduce()`, and `filter()` optimized for traversing arrays?](https://www.quora.com/JavaScript-programming-language-Are-Javascript-functions-like-map-reduce-and-filter-already-optimized-for-traversing-array/answer/Quildreen-Motta)
-  - Загрузка...
-
-**[⬆ к оглавлению](#Оглавление)**
-
-## <a name="resources">Ресурсы</a>
-
-**Изучение ES6+**
-
-  - [Последняя спецификаия ECMA](https://tc39.github.io/ecma262/)
-  - [ExploringJS](http://exploringjs.com/)
-  - [ES6 Compatibility Table](https://kangax.github.io/compat-table/es6/)
-  - [Comprehensive Overview of ES6 Features](http://es6-features.org/)
-
-**Почитайте это**
-
-  - [Standard ECMA-262](http://www.ecma-international.org/ecma-262/6.0/index.html)
-
-**Инструменты**
-
-  - Линтеры
-    - [ESlint](https://eslint.org/) - [Airbnb Style .eslintrc](https://github.com/airbnb/javascript/blob/master/linters/.eslintrc)
-    - [JSHint](http://jshint.com/) - [Airbnb Style .jshintrc](https://github.com/airbnb/javascript/blob/master/linters/.jshintrc)
-    - [JSCS](https://github.com/jscs-dev/node-jscs) - [Airbnb Style Preset](https://github.com/jscs-dev/node-jscs/blob/master/presets/airbnb.json) (Устарело,  пожалуйста, используйте  [ESlint](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base))
-  - Neutrino preset - [neutrino-preset-airbnb-base](https://neutrino.js.org/presets/neutrino-preset-airbnb-base/)
-
-**Другие руководства**
-
-  - [Google JavaScript Style Guide](https://google.github.io/styleguide/javascriptguide.xml)
-  - [jQuery Core Style Guidelines](https://contribute.jquery.org/style-guide/js/)
-  - [Principles of Writing Consistent, Idiomatic JavaScript](https://github.com/rwaldron/idiomatic.js)
-
-**Другие стили**
-
-  - [Naming this in nested functions](https://gist.github.com/cjohansen/4135065) - Christian Johansen
-  - [Conditional Callbacks](https://github.com/airbnb/javascript/issues/52) - Ross Allen
-  - [Popular JavaScript Coding Conventions on GitHub](http://sideeffect.kr/popularconvention/#javascript) - JeongHoon Byun
-  - [Multiple var statements in JavaScript, not superfluous](http://benalman.com/news/2012/05/multiple-var-statements-javascript/) - Ben Alman
-
-**Дальнейшее чтение**
-
-  - [Understanding JavaScript Closures](https://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closures/) - Angus Croll
-  - [Basic JavaScript for the impatient programmer](http://www.2ality.com/2013/06/basic-javascript.html) - Dr. Axel Rauschmayer
-  - [You Might Not Need jQuery](http://youmightnotneedjquery.com/) - Zack Bloom & Adam Schwartz
-  - [ES6 Features](https://github.com/lukehoban/es6features) - Luke Hoban
-  - [Frontend Guidelines](https://github.com/bendc/frontend-guidelines) - Benjamin De Cock
-
-**Книги**
-
-  - [JavaScript: The Good Parts](https://www.amazon.com/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742) - Douglas Crockford
-  - [JavaScript Patterns](https://www.amazon.com/JavaScript-Patterns-Stoyan-Stefanov/dp/0596806752) - Stoyan Stefanov
-  - [Pro JavaScript Design Patterns](https://www.amazon.com/JavaScript-Design-Patterns-Recipes-Problem-Solution/dp/159059908X)  - Ross Harmes and Dustin Diaz
-  - [High Performance Web Sites: Essential Knowledge for Front-End Engineers](https://www.amazon.com/High-Performance-Web-Sites-Essential/dp/0596529309) - Steve Souders
-  - [Maintainable JavaScript](https://www.amazon.com/Maintainable-JavaScript-Nicholas-C-Zakas/dp/1449327680) - Nicholas C. Zakas
-  - [JavaScript Web Applications](https://www.amazon.com/JavaScript-Web-Applications-Alex-MacCaw/dp/144930351X) - Alex MacCaw
-  - [Pro JavaScript Techniques](https://www.amazon.com/Pro-JavaScript-Techniques-John-Resig/dp/1590597273) - John Resig
-  - [Smashing Node.js: JavaScript Everywhere](https://www.amazon.com/Smashing-Node-js-JavaScript-Everywhere-Magazine/dp/1119962595) - Guillermo Rauch
-  - [Secrets of the JavaScript Ninja](https://www.amazon.com/Secrets-JavaScript-Ninja-John-Resig/dp/193398869X) - John Resig and Bear Bibeault
-  - [Human JavaScript](http://humanjavascript.com/) - Henrik Joreteg
-  - [Superhero.js](http://superherojs.com/) - Kim Joar Bekkelund, Mads Mobæk, & Olav Bjorkoy
-  - [JSBooks](http://jsbooks.revolunet.com/) - Julien Bouquillon
-  - [Third Party JavaScript](https://www.manning.com/books/third-party-javascript) - Ben Vinegar and Anton Kovalyov
-  - [Effective JavaScript: 68 Specific Ways to Harness the Power of JavaScript](http://amzn.com/0321812182) - David Herman
-  - [Eloquent JavaScript](http://eloquentjavascript.net/) - Marijn Haverbeke
-  - [You Don't Know JS: ES6 & Beyond](http://shop.oreilly.com/product/0636920033769.do) - Kyle Simpson
-
-**Блоги**
-
-  - [JavaScript Weekly](http://javascriptweekly.com/)
-  - [JavaScript, JavaScript...](https://javascriptweblog.wordpress.com/)
-  - [Bocoup Weblog](https://bocoup.com/weblog)
-  - [Adequately Good](http://www.adequatelygood.com/)
-  - [NCZOnline](https://www.nczonline.net/)
-  - [Perfection Kills](http://perfectionkills.com/)
-  - [Ben Alman](http://benalman.com/)
-  - [Dmitry Baranovskiy](http://dmitry.baranovskiy.com/)
-  - [nettuts](http://code.tutsplus.com/?s=javascript)
-
-**Подкасты**
-
-  - [JavaScript Air](https://javascriptair.com/)
-  - [JavaScript Jabber](https://devchat.tv/js-jabber/)
-
-**[⬆ к оглавлению](#Оглавление)**
-
-## <a name="in-the-wild">В реальной жизни</a>
-
-  Это список организаций, которые используют данное руководство. Отправьте нам пулреквест и мы добавим вас в этот список.
-
-  - **123erfasst**: [123erfasst/javascript](https://github.com/123erfasst/javascript)
-  - **3blades**: [3Blades](https://github.com/3blades)
-  - **4Catalyzer**: [4Catalyzer/javascript](https://github.com/4Catalyzer/javascript)
-  - **Aan Zee**: [AanZee/javascript](https://github.com/AanZee/javascript)
-  - **Adult Swim**: [adult-swim/javascript](https://github.com/adult-swim/javascript)
-  - **Airbnb**: [airbnb/javascript](https://github.com/airbnb/javascript)
-  - **AltSchool**: [AltSchool/javascript](https://github.com/AltSchool/javascript)
-  - **Apartmint**: [apartmint/javascript](https://github.com/apartmint/javascript)
-  - **Ascribe**: [ascribe/javascript](https://github.com/ascribe/javascript)
-  - **Avalara**: [avalara/javascript](https://github.com/avalara/javascript)
-  - **Avant**: [avantcredit/javascript](https://github.com/avantcredit/javascript)
-  - **Axept**: [axept/javascript](https://github.com/axept/javascript)
-  - **BashPros**: [BashPros/javascript](https://github.com/BashPros/javascript)
-  - **Billabong**: [billabong/javascript](https://github.com/billabong/javascript)
-  - **Bisk**: [bisk](https://github.com/Bisk/)
-  - **Bonhomme**: [bonhommeparis/javascript](https://github.com/bonhommeparis/javascript)
-  - **Brainshark**: [brainshark/javascript](https://github.com/brainshark/javascript)
-  - **CaseNine**: [CaseNine/javascript](https://github.com/CaseNine/javascript)
-  - **Chartboost**: [ChartBoost/javascript-style-guide](https://github.com/ChartBoost/javascript-style-guide)
-  - **ComparaOnline**: [comparaonline/javascript](https://github.com/comparaonline/javascript-style-guide)
-  - **Compass Learning**: [compasslearning/javascript-style-guide](https://github.com/compasslearning/javascript-style-guide)
-  - **DailyMotion**: [dailymotion/javascript](https://github.com/dailymotion/javascript)
-  - **DoSomething**: [DoSomething/eslint-config](https://github.com/DoSomething/eslint-config)
-  - **Digitpaint** [digitpaint/javascript](https://github.com/digitpaint/javascript)
-  - **Ecosia**: [ecosia/javascript](https://github.com/ecosia/javascript)
-  - **Evernote**: [evernote/javascript-style-guide](https://github.com/evernote/javascript-style-guide)
-  - **Evolution Gaming**: [evolution-gaming/javascript](https://github.com/evolution-gaming/javascript)
-  - **EvozonJs**: [evozonjs/javascript](https://github.com/evozonjs/javascript)
-  - **ExactTarget**: [ExactTarget/javascript](https://github.com/ExactTarget/javascript)
-  - **Expensify** [Expensify/Style-Guide](https://github.com/Expensify/Style-Guide/blob/master/javascript.md)
-  - **Flexberry**: [Flexberry/javascript-style-guide](https://github.com/Flexberry/javascript-style-guide)
-  - **Gawker Media**: [gawkermedia](https://github.com/gawkermedia/)
-  - **General Electric**: [GeneralElectric/javascript](https://github.com/GeneralElectric/javascript)
-  - **Generation Tux**: [GenerationTux/javascript](https://github.com/generationtux/styleguide)
-  - **GoodData**: [gooddata/gdc-js-style](https://github.com/gooddata/gdc-js-style)
-  - **GreenChef**: [greenchef/javascript](https://github.com/greenchef/javascript)
-  - **Grooveshark**: [grooveshark/javascript](https://github.com/grooveshark/javascript)
-  - **Grupo-Abraxas**: [Grupo-Abraxas/javascript](https://github.com/Grupo-Abraxas/javascript)
-  - **Honey**: [honeyscience/javascript](https://github.com/honeyscience/javascript)
-  - **How About We**: [howaboutwe/javascript](https://github.com/howaboutwe/javascript-style-guide)
-  - **Huballin**: [huballin](https://github.com/huballin/)
-  - **HubSpot**: [HubSpot/javascript](https://github.com/HubSpot/javascript)
-  - **Hyper**: [hyperoslo/javascript-playbook](https://github.com/hyperoslo/javascript-playbook/blob/master/style.md)
-  - **InterCity Group**: [intercitygroup/javascript-style-guide](https://github.com/intercitygroup/javascript-style-guide)
-  - **Jam3**: [Jam3/Javascript-Code-Conventions](https://github.com/Jam3/Javascript-Code-Conventions)
-  - **JeopardyBot**: [kesne/jeopardy-bot](https://github.com/kesne/jeopardy-bot/blob/master/STYLEGUIDE.md)
-  - **JSSolutions**: [JSSolutions/javascript](https://github.com/JSSolutions/javascript)
-  - **Kaplan Komputing**: [kaplankomputing/javascript](https://github.com/kaplankomputing/javascript)
-  - **KickorStick**: [kickorstick](https://github.com/kickorstick/)
-  - **Kinetica Solutions**: [kinetica/javascript](https://github.com/kinetica/Javascript-style-guide)
-  - **LEINWAND**: [LEINWAND/javascript](https://github.com/LEINWAND/javascript)
-  - **Lonely Planet**: [lonelyplanet/javascript](https://github.com/lonelyplanet/javascript)
-  - **M2GEN**: [M2GEN/javascript](https://github.com/M2GEN/javascript)
-  - **Mighty Spring**: [mightyspring/javascript](https://github.com/mightyspring/javascript)
-  - **MinnPost**: [MinnPost/javascript](https://github.com/MinnPost/javascript)
-  - **MitocGroup**: [MitocGroup/javascript](https://github.com/MitocGroup/javascript)
-  - **ModCloth**: [modcloth/javascript](https://github.com/modcloth/javascript)
-  - **Money Advice Service**: [moneyadviceservice/javascript](https://github.com/moneyadviceservice/javascript)
-  - **Muber**: [muber](https://github.com/muber/)
-  - **National Geographic**: [natgeo](https://github.com/natgeo/)
-  - **Nimbl3**: [nimbl3/javascript](https://github.com/nimbl3/javascript)
-  - **Nulogy**: [nulogy/javascript](https://github.com/nulogy/javascript)
-  - **Orange Hill Development**: [orangehill/javascript](https://github.com/orangehill/javascript)
-  - **Orion Health**: [orionhealth/javascript](https://github.com/orionhealth/javascript)
-  - **OutBoxSoft**: [OutBoxSoft/javascript](https://github.com/OutBoxSoft/javascript)
-  - **Peerby**: [Peerby/javascript](https://github.com/Peerby/javascript)
-  - **Razorfish**: [razorfish/javascript-style-guide](https://github.com/razorfish/javascript-style-guide)
-  - **reddit**: [reddit/styleguide/javascript](https://github.com/reddit/styleguide/tree/master/javascript)
-  - **React**: [facebook.github.io/react/contributing/how-to-contribute.html#style-guide](https://facebook.github.io/react/contributing/how-to-contribute.html#style-guide)
-  - **REI**: [reidev/js-style-guide](https://github.com/rei/code-style-guides/)
-  - **Ripple**: [ripple/javascript-style-guide](https://github.com/ripple/javascript-style-guide)
-  - **Sainsbury's Supermarkets**: [jsainsburyplc](https://github.com/jsainsburyplc)
-  - **SeekingAlpha**: [seekingalpha/javascript-style-guide](https://github.com/seekingalpha/javascript-style-guide)
-  - **Shutterfly**: [shutterfly/javascript](https://github.com/shutterfly/javascript)
-  - **Sourcetoad**: [sourcetoad/javascript](https://github.com/sourcetoad/javascript)
-  - **Springload**: [springload](https://github.com/springload/)
-  - **StratoDem Analytics**: [stratodem/javascript](https://github.com/stratodem/javascript)
-  - **SteelKiwi Development**: [steelkiwi/javascript](https://github.com/steelkiwi/javascript)
-  - **StudentSphere**: [studentsphere/javascript](https://github.com/studentsphere/guide-javascript)
-  - **SwoopApp**: [swoopapp/javascript](https://github.com/swoopapp/javascript)
-  - **SysGarage**: [sysgarage/javascript-style-guide](https://github.com/sysgarage/javascript-style-guide)
-  - **Syzygy Warsaw**: [syzygypl/javascript](https://github.com/syzygypl/javascript)
-  - **Target**: [target/javascript](https://github.com/target/javascript)
-  - **TheLadders**: [TheLadders/javascript](https://github.com/TheLadders/javascript)
-  - **The Nerdery**: [thenerdery/javascript-standards](https://github.com/thenerdery/javascript-standards)
-  - **T4R Technology**: [T4R-Technology/javascript](https://github.com/T4R-Technology/javascript)
-  - **VoxFeed**: [VoxFeed/javascript-style-guide](https://github.com/VoxFeed/javascript-style-guide)
-  - **WeBox Studio**: [weboxstudio/javascript](https://github.com/weboxstudio/javascript)
-  - **Weggo**: [Weggo/javascript](https://github.com/Weggo/javascript)
-  - **Zillow**: [zillow/javascript](https://github.com/zillow/javascript)
-  - **ZocDoc**: [ZocDoc/javascript](https://github.com/ZocDoc/javascript)
-
-**[⬆ к оглавлению](#Оглавление)**
-
-## <a name="translation">Переводы</a>
-
-  Это руководство также переведено на другие языки:
-
-  - ![br](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Brazil.png) **Бразильский вариант португальского языка**: [armoucar/javascript-style-guide](https://github.com/armoucar/javascript-style-guide)
-  - ![bg](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Bulgaria.png) **Болгарский**: [borislavvv/javascript](https://github.com/borislavvv/javascript)
-  - ![ca](https://raw.githubusercontent.com/fpmweb/javascript-style-guide/master/img/catala.png) **Каталонский**: [fpmweb/javascript-style-guide](https://github.com/fpmweb/javascript-style-guide)
-  - ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinese (Simplified)**: [yuche/javascript](https://github.com/yuche/javascript)
-  - ![tw](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Taiwan.png) **Китайский (Традиционный)**: [jigsawye/javascript](https://github.com/jigsawye/javascript)
-  - ![fr](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/France.png) **Французский**: [nmussy/javascript-style-guide](https://github.com/nmussy/javascript-style-guide)
-  - ![de](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Germany.png) **Немецкий**: [timofurrer/javascript-style-guide](https://github.com/timofurrer/javascript-style-guide)
-  - ![it](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Italy.png) **Итальянский**: [sinkswim/javascript-style-guide](https://github.com/sinkswim/javascript-style-guide)
-  - ![jp](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Japan.png) **Японский**: [mitsuruog/javascript-style-guide](https://github.com/mitsuruog/javascript-style-guide)
-  - ![kr](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/South-Korea.png) **Korean**: [ParkSB/javascript-style-guide](https://github.com/ParkSB/javascript-style-guide)
-  - ![ru](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Russia.png) **Русский**: [leonidlebedev/javascript-airbnb](https://github.com/leonidlebedev/javascript-airbnb)
-  - ![es](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Spain.png) **Испанский**: [paolocarrasco/javascript-style-guide](https://github.com/paolocarrasco/javascript-style-guide)
-  - ![th](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Thailand.png) **Тайский**: [lvarayut/javascript-style-guide](https://github.com/lvarayut/javascript-style-guide)
-  - ![ua](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Ukraine.png) **Украинский**: [ivanzusko/javascript](https://github.com/ivanzusko/javascript)
-  - ![vn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Vietnam.png) **Вьетнамский**: [hngiang/javascript-style-guide](https://github.com/hngiang/javascript-style-guide)
-
-**[⬆ к оглавлению](#Оглавление)**
-
-## <a name="chat-with-us-about-javascript">Пообщаться с разработчиками Airbnb</a>
-
-  - Найдите их на [gitter](https://gitter.im/airbnb/javascript).
-
-## <a name="contributors">Участники перевода</a>
-
-  - [Посмотреть всех](https://github.com/leonidlebedev/javascript-airbnb/graphs/contributors)
 
 ## <a name="license">Лицензия</a>
 
@@ -3633,8 +3273,3 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 **[⬆ к оглавлению](#Оглавление)**
 
-## <a name="amendments">Поправки</a>
-
-Мы рекомендуем вам сделать форк этого руководства и изменить его правила под стиль вашей команды. Ниже вы можете перечислить свои изменения в руководстве. Это позволит вам обновлять его время от времени, не сталкиваясь с конфликтами слияний.
-
-# };
