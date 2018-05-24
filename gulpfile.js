@@ -1,4 +1,7 @@
+const fs = require('fs');
+
 const gulp = require('gulp'),
+    uglify = require('gulp-uglify'),
     watch = require('gulp-watch'),
     dirSync = require('gulp-directory-sync'),
     rollup = require('rollup-stream'),
@@ -47,20 +50,38 @@ const path = require('./configs/path.json');
 const jsDocconfig = require(path.configs.jsDoc);
 const babelConfig = require(path.configs.babel);
 
-gulp.task('js', rollupJS('index.js', {
-  basePath: path.src.js,
-  format: 'cjs',
-  distPath: path.build.js,
-  sourcemap: true
-}));
+// gulp.task('js', rollupJS('index.js', {
+//   basePath: path.build.js,
+//   format: 'cjs',
+//   distPath: path.build.minificationJs,
+//   sourcemap: true
+// }));
+
 
 
 gulp.task('watch', function () {
     gulp.watch(path.watch.js, ['js', 'validation:js']);
 });
 
+
+let pump = require('pump'); // handle errors
+
+gulp.task('minification:js', function (cb) {
+  fs.copyFile(path.build.js + path.src.endFileJs, path.build.minificationJs +  path.src.startFileJs, (err) => {
+    if (err) throw err;
+    // console.log(`${path.build.js + path.src.endFileJs} `);
+  });
+  pump([
+        gulp.src(path.build.minificationJs  + path.src.startFileJs),
+        uglify(),
+        gulp.dest(path.build.minificationJs)
+    ], cb
+  );
+
+});
+
 gulp.task('validation:js', () => {
-  return gulp.src([path.validation.js,'!node_modules/**'])
+  return gulp.src([path.build.minificationJs + path.src.startFileJs,'!node_modules/**'])
     .pipe(eslint({
       fix: true       // редактирует ошибки если может
     }))
@@ -78,10 +99,10 @@ gulp.task('validation:js', () => {
 	в директорию с публикуемым кодом.
 
 */
-gulp.task('dataSync', function () {
-	return gulp.src('')
-		.pipe(dirSync(path.src.data, path.build.data, {printSummary: true}))
-});
+// gulp.task('dataSync', function () {
+// 	return gulp.src('')
+// 		.pipe(dirSync(path.src.data, path.build.data, {printSummary: true}))
+// });
 
 /*
     В моем проекте стоит стандарт airbnb,под свои проект можно сконфигурировать файл заново
@@ -113,7 +134,7 @@ gulp.task('documentation:jsDoc', function (cb) {
     .pipe(jsdoc(jsDocconfig, cb));
 });
 
-gulp.task('default', ['validation:js', 'js' , 'watch'] );
+gulp.task('default', ['minification:js', 'validation:js' ] );
 
 
 
