@@ -1,5 +1,6 @@
+// default modules
 const fs = require('fs');
-
+// for gulp plugins
 const gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     watch = require('gulp-watch'),
