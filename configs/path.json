@@ -2,8 +2,9 @@
    "src": {
       "startFileJs": "index.js",
       "endFileJs": "bundle.js",
+      "minificationEndFileJs": "bundle.min.js",
       "pug": "src/pug/**/*.pug",
-      "js": "src/js/",
+      "js": "src/",
       "scss": "src/styles/**/*.scss",
       "data": "src/js/data"
    },
@@ -25,7 +26,7 @@
    },
    "watch": {
       "pug": "src/pug/**/*.pug",
-      "js": "src/js/**/*.js",
+      "js": "src/**/*.js",
       "scss": "src/styles/**/*.scss"
    },
    "configs": {
