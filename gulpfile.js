@@ -68,7 +68,7 @@ gulp.task('watch', function () {
 let pump = require('pump'); // handle errors
 
 gulp.task('minification:js', function (cb) {
-  fs.copyFile(path.build.js + path.src.endFileJs, path.build.minificationJs +  path.src.startFileJs, (err) => {
+  fs.copyFile(path.build.js + path.src.endFileJs, path.build.minificationJs +  path.src.minificationEndFileJs, (err) => {
     if (err) throw err;
     // console.log(`${path.build.js + path.src.endFileJs} `);
   });
