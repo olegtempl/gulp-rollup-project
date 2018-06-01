@@ -4,6 +4,7 @@ const fs = require('fs');
 const gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     watch = require('gulp-watch'),
+    cl = require('node-cl-log'),
     dirSync = require('gulp-directory-sync'),
     rollup = require('rollup-stream'),
     source = require('vinyl-source-stream'),
@@ -93,6 +94,7 @@ gulp.task('validation:js', () => {
         console.log(`Total Warnings: ${results.warningCount}`);
         console.log(`Total Errors: ${results.errorCount}`);
     }))
+  cl.cya('End validation');
 });
 
 /*
@@ -128,11 +130,15 @@ gulp.task('test:jasmine', () => {
   jasmine.execute();
 });
 
+gulp.task('documentation:bundler', function (cb) {
+    cl.cya('End generation documentation with the help mark-down bundler');
+});
 
 
 gulp.task('documentation:jsDoc', function (cb) {
     gulp.src([path.docs.jsDoc, `${path.build.js}index.js`], {read: false})
     .pipe(jsdoc(jsDocconfig, cb));
+    cl.cya('End generation documentation with the help jsDoc ');
 });
 
 gulp.task('default', ['minification:js', 'validation:js' ] );
@@ -147,3 +153,5 @@ gulp.task('default', ['minification:js', 'validation:js' ] );
 
 // documentation:license - генерация лицензии ?? Или на прямую использовать апи моего модуля
 //     // "test": "gulp test",
+
+
