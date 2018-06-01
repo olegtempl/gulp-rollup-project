@@ -22,12 +22,12 @@ coverage
 .grunt
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
-./build
-./dist
-./configs
-./docs
-./src
-./tests
+build
+dist
+configs
+docs
+src
+tests
 
 # Dependency directory
 # Deployed apps should consider commenting this line out:
