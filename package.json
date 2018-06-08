@@ -14,7 +14,8 @@
     "js:gulp": "gulp",
     "js": "rollup -c configs/rollup.config.js -w -m ",
     "size:files": "pkgfiles",
-    "size:archive": "tarball=\"$(npm pack .)\"; wc -c \"${tarball}\"; tar tvf \"${tarball}\"; rm \"${tarball}\";"
+    "size:archive": "tarball=\"$(npm pack .)\"; wc -c \"${tarball}\"; tar tvf \"${tarball}\"; rm \"${tarball}\";",
+    "bash": "bash bashfile.sh"
   },
   "license": "MIT",
   "devDependencies": {
