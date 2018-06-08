@@ -13,9 +13,8 @@
     "test:u": "gulp test:unit",
     "js:gulp": "gulp",
     "js": "rollup -c configs/rollup.config.js -w -m ",
-    "pkgfiles": "pkgfiles",
-    "size": "tarball=\"$(npm pack .)\"; wc -c \"${tarball}\"; tar tvf \"${tarball}\"; rm \"${tarball}\";",
-    "commit": "commit-wizard"
+    "size:files": "pkgfiles",
+    "size:archive": "tarball=\"$(npm pack .)\"; wc -c \"${tarball}\"; tar tvf \"${tarball}\"; rm \"${tarball}\";"
   },
   "license": "MIT",
   "devDependencies": {
@@ -50,14 +49,11 @@
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
   },
-  "release": {
-    "analyzeCommits": "simple-commit-message"
-  },
   "config": {
     "pre-git": {
       "pre-push": [
-        "npm run size",
-        "npm run pkgfiles"
+        "npm run size:archive",
+        "npm run size:files"
       ]
     }
   }
