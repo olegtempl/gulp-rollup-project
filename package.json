@@ -52,7 +52,6 @@
   "config": {
     "pre-git": {
       "pre-push": [
-        "npm run size:archive",
         "npm run size:files"
       ]
     }
