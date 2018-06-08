@@ -3,9 +3,6 @@ module.exports = function func(){
 	return num + 1
 
 
-
-
-
 	
 };
 
