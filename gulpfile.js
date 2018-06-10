@@ -52,12 +52,12 @@ const path = require('./configs/path.json');
 const jsDocconfig = require(path.configs.jsDoc);
 const babelConfig = require(path.configs.babel);
 
-// gulp.task('js', rollupJS('index.js', {
-//   basePath: path.build.js,
-//   format: 'cjs',
-//   distPath: path.build.minificationJs,
-//   sourcemap: true
-// }));
+gulp.task('js', rollupJS('index.js', {
+  basePath: path.src.js,
+  format: 'cjs',
+  distPath: path.build.js + path.src.endFileJs,
+  sourcemap: true
+}));
 
 
 
