@@ -1,16 +1,16 @@
 {
    "src": {
       "startFileJs": "index.js",
-      "endFileJs": "bundle.js",
-      "minificationEndFileJs": "bundle.min.js",
+      "minificationEndFileJs": "index.min.js",
       "pug": "src/pug/**/*.pug",
       "js": "src/",
       "scss": "src/styles/**/*.scss",
       "data": "src/js/data"
-   },
-   "build": {
+    },
+    "build": {
+      "endFileJs": "index.js",
       "html": "build/",
-      "js": "build/",
+      "js": "./",
       "minificationJs": "./",
       "css": "build/styles/",
       "data": "build/data"
@@ -31,7 +31,8 @@
    },
    "configs": {
       "jsDoc": "./configs/jsDoc.json",
-      "babel": "./configs/babel.json"
+      "babel": "./configs/babel.json",
+      "minify": "./configs/minify.json"
    },
    "docs": {
       "jsDoc": "build/docs/jsDoc/README.md"
