@@ -31,9 +31,9 @@
     "gulp-eslint": "^4.0.2",
     "gulp-jasmine": "^3.0.0",
     "gulp-jsdoc3": "^2.0.0",
+    "gulp-minify": "^2.1.0",
     "gulp-mocha": "^5.0.0",
     "gulp-sourcemaps": "^2.6.4",
-    "gulp-uglify": "^3.0.0",
     "gulp-watch": "^5.0.0",
     "install": "^0.11.0",
     "jasmine-console-reporter": "^3.0.2",
@@ -56,5 +56,8 @@
         "npm run size:files"
       ]
     }
+  },
+  "release": {
+    "analyzeCommits": "simple-commit-message"
   }
 }
