@@ -2,14 +2,14 @@
 const fs = require('fs');
 // for gulp plugins
 const gulp = require('gulp'),
-    uglify = require('gulp-uglify'),
     watch = require('gulp-watch'),
-    cl = require('node-cl-log'),
+    minify = require('gulp-minify')
     dirSync = require('gulp-directory-sync'),
     rollup = require('rollup-stream'),
     source = require('vinyl-source-stream'),
     buffer = require('vinyl-buffer'),
     sourcemaps = require('gulp-sourcemaps'),
+    cl = require('node-cl-log'),
     babel = require('rollup-plugin-babel'),
     commonJs = require('rollup-plugin-commonjs'),
     resolveNodeModules = require('rollup-plugin-node-resolve'),
@@ -22,7 +22,7 @@ const gulp = require('gulp'),
           plugins: [
             babel(babelConfig),
             resolveNodeModules(),
-            commonJs(),
+            commonJs()
           ]
         })
       .pipe(source(inputFile, options.basePath))
@@ -51,39 +51,27 @@ const jsdoc = require('gulp-jsdoc3');
 const path = require('./configs/path.json');
 const jsDocconfig = require(path.configs.jsDoc);
 const babelConfig = require(path.configs.babel);
+const minifyConfig = require(path.configs.minify);
 
 gulp.task('js', rollupJS('index.js', {
   basePath: path.src.js,
   format: 'cjs',
-  distPath: path.build.js + path.src.endFileJs,
+  distPath: path.build.js + path.build.endFileJs,
   sourcemap: true
 }));
-
-
 
 gulp.task('watch', function () {
     gulp.watch(path.watch.js, ['js', 'validation:js']);
 });
 
-
-let pump = require('pump'); // handle errors
-
-gulp.task('minification:js', function (cb) {
-  fs.copyFile(path.build.js + path.src.endFileJs, path.build.minificationJs +  path.src.startFileJs, (err) => {
-    if (err) throw err;
-    // console.log(`${path.build.js + path.src.endFileJs} `);
-  });
-  pump([
-        gulp.src(path.build.minificationJs  + path.src.startFileJs),
-        uglify(),
-        gulp.dest(path.build.minificationJs)
-    ], cb
-  );
-
+gulp.task('minification:js', function() {
+  gulp.src(path.build.js + path.src.startFileJs)
+    .pipe(minify(minifyConfig))
+    .pipe(gulp.dest('./'))
 });
 
 gulp.task('validation:js', () => {
-  return gulp.src([path.build.minificationJs + path.src.startFileJs,'!node_modules/**'])
+  return gulp.src([path.src.startFileJs,'!node_modules/**'])
     .pipe(eslint({
       fix: true       // редактирует ошибки если может
     }))
