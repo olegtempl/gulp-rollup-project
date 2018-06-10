@@ -16,7 +16,7 @@
       "data": "build/data"
    },
    "tests": {
-      "mocha": "build/tests/mocha/spec.js"
+      "mocha": "build/test/mocha/spec.js"
    },
    "validation": {
       "html": "build/*.html",
