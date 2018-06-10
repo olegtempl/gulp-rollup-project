@@ -28,6 +28,10 @@ configs
 docs
 src
 tests
+index-debug.js
+index.js.map
+gulpfile.js
+configs
 
 # Dependency directory
 # Deployed apps should consider commenting this line out:
