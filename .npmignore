@@ -42,3 +42,4 @@ configs
 *~
 *.swp
 manifest_project.md
+.vscode/
